@@ -14,6 +14,7 @@
 		95703D3122699B64008F2A61 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 95703D3022699B64008F2A61 /* Assets.xcassets */; };
 		95703D3422699B64008F2A61 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 95703D3222699B64008F2A61 /* LaunchScreen.storyboard */; };
 		95703D3C22699EB1008F2A61 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95703D3B22699EB1008F2A61 /* GradientView.swift */; };
+		95703D3E2269A1B2008F2A61 /* MainPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95703D3D2269A1B2008F2A61 /* MainPageViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		95703D3322699B64008F2A61 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		95703D3522699B64008F2A61 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		95703D3B22699EB1008F2A61 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		95703D3D2269A1B2008F2A61 /* MainPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPageViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 				95703D3522699B64008F2A61 /* Info.plist */,
 				95703D2D22699B63008F2A61 /* GAMPI.xcdatamodeld */,
 				95703D3B22699EB1008F2A61 /* GradientView.swift */,
+				95703D3D2269A1B2008F2A61 /* MainPageViewController.swift */,
 			);
 			path = GAMPI;
 			sourceTree = "<group>";
@@ -141,6 +144,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				95703D3E2269A1B2008F2A61 /* MainPageViewController.swift in Sources */,
 				95703D2F22699B63008F2A61 /* GAMPI.xcdatamodeld in Sources */,
 				95703D2922699B63008F2A61 /* ViewController.swift in Sources */,
 				95703D3C22699EB1008F2A61 /* GradientView.swift in Sources */,
