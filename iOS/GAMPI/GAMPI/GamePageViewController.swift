@@ -84,5 +84,10 @@ class GamePageViewController: UIViewController {
         }
         //update the number of moves
     }
+    
+    private func restart_game() {
+        //call game controller's restart game
+        //render the images
+    }
 
 }
