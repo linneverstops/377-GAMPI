@@ -66,10 +66,10 @@
             </objects>
             <point key="canvasLocation" x="191" y="204"/>
         </scene>
-        <!--View Controller-->
+        <!--Game Page View Controller-->
         <scene sceneID="otX-Ql-lTY">
             <objects>
-                <viewController id="LKj-ou-BtJ" sceneMemberID="viewController">
+                <viewController id="LKj-ou-BtJ" customClass="GamePageViewController" customModule="GAMPI" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="z0Z-Ww-bHv" customClass="GradientView" customModule="GAMPI" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -246,6 +246,42 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
+                    <connections>
+                        <outletCollection property="game_board_row1" destination="SUX-xe-lI3" collectionClass="NSMutableArray" id="hyP-PN-ps9"/>
+                        <outletCollection property="game_board_row1" destination="5Gy-Hf-FQQ" collectionClass="NSMutableArray" id="BVb-et-X8A"/>
+                        <outletCollection property="game_board_row1" destination="lZ7-pM-ozz" collectionClass="NSMutableArray" id="Dcm-aa-gQ6"/>
+                        <outletCollection property="game_board_row1" destination="5Sp-fH-yz6" collectionClass="NSMutableArray" id="gqO-1z-Vet"/>
+                        <outletCollection property="game_board_row1" destination="H3a-fd-Zqf" collectionClass="NSMutableArray" id="faV-fB-ckD"/>
+                        <outletCollection property="game_board_row2" destination="UNk-eC-hnJ" collectionClass="NSMutableArray" id="BJw-gX-B6V"/>
+                        <outletCollection property="game_board_row2" destination="Tia-8Z-yHK" collectionClass="NSMutableArray" id="KdU-oL-E6A"/>
+                        <outletCollection property="game_board_row2" destination="BBs-DE-po7" collectionClass="NSMutableArray" id="Nlt-wm-XOO"/>
+                        <outletCollection property="game_board_row2" destination="COi-ph-8l5" collectionClass="NSMutableArray" id="IDf-DP-291"/>
+                        <outletCollection property="game_board_row2" destination="j39-ZO-ele" collectionClass="NSMutableArray" id="hbJ-MX-Apz"/>
+                        <outletCollection property="game_board_row3" destination="xat-fW-OmW" collectionClass="NSMutableArray" id="xde-NM-LLs"/>
+                        <outletCollection property="game_board_row3" destination="1JD-Wd-JLD" collectionClass="NSMutableArray" id="wfM-th-6V1"/>
+                        <outletCollection property="game_board_row3" destination="3Aa-XT-hVq" collectionClass="NSMutableArray" id="n9i-sB-rxv"/>
+                        <outletCollection property="game_board_row3" destination="QNC-Lg-bJj" collectionClass="NSMutableArray" id="hNf-9m-vtU"/>
+                        <outletCollection property="game_board_row3" destination="m91-Pm-bHO" collectionClass="NSMutableArray" id="gjo-Dl-wpg"/>
+                        <outletCollection property="game_board_row4" destination="vcK-ze-d9A" collectionClass="NSMutableArray" id="ixh-wb-Af8"/>
+                        <outletCollection property="game_board_row4" destination="Fes-Fm-Ed8" collectionClass="NSMutableArray" id="B98-wK-XHA"/>
+                        <outletCollection property="game_board_row4" destination="2EY-Eq-OnG" collectionClass="NSMutableArray" id="ZEC-My-4GW"/>
+                        <outletCollection property="game_board_row4" destination="t4j-fD-ijj" collectionClass="NSMutableArray" id="cAa-n5-dqq"/>
+                        <outletCollection property="game_board_row4" destination="XGx-a3-rui" collectionClass="NSMutableArray" id="VKC-Mh-Ia0"/>
+                        <outletCollection property="game_board_row5" destination="gBb-sC-wI2" collectionClass="NSMutableArray" id="wld-fj-fBM"/>
+                        <outletCollection property="game_board_row5" destination="cfv-jn-YjT" collectionClass="NSMutableArray" id="by8-nm-p3q"/>
+                        <outletCollection property="game_board_row5" destination="xvZ-iu-ge6" collectionClass="NSMutableArray" id="va7-Dt-UoD"/>
+                        <outletCollection property="game_board_row5" destination="xnp-8t-rHL" collectionClass="NSMutableArray" id="1o2-O6-hNh"/>
+                        <outletCollection property="game_board_row5" destination="gVi-4J-0EH" collectionClass="NSMutableArray" id="IpK-NC-VH1"/>
+                        <outletCollection property="goal_board_row1" destination="KD7-3c-IKj" collectionClass="NSMutableArray" id="6uc-Ma-gdV"/>
+                        <outletCollection property="goal_board_row1" destination="iEw-zo-zLo" collectionClass="NSMutableArray" id="i6M-Gi-bMA"/>
+                        <outletCollection property="goal_board_row1" destination="25I-xJ-2ao" collectionClass="NSMutableArray" id="kc9-uc-btT"/>
+                        <outletCollection property="goal_board_row2" destination="Wg9-5C-UB2" collectionClass="NSMutableArray" id="btI-AX-bCh"/>
+                        <outletCollection property="goal_board_row2" destination="ZDd-f0-fC6" collectionClass="NSMutableArray" id="NgG-AG-Ck4"/>
+                        <outletCollection property="goal_board_row2" destination="OBh-My-Fhc" collectionClass="NSMutableArray" id="Lde-WT-Heu"/>
+                        <outletCollection property="goal_board_row3" destination="eUx-ge-skd" collectionClass="NSMutableArray" id="w0h-10-1sF"/>
+                        <outletCollection property="goal_board_row3" destination="P58-Qk-qSD" collectionClass="NSMutableArray" id="xdR-Ay-bZG"/>
+                        <outletCollection property="goal_board_row3" destination="ml1-YE-bIW" collectionClass="NSMutableArray" id="EAA-sv-XMh"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PfE-u1-GYZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

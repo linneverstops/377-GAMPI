@@ -16,6 +16,7 @@
 		95703D3C22699EB1008F2A61 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95703D3B22699EB1008F2A61 /* GradientView.swift */; };
 		95703D3E2269A1B2008F2A61 /* MainPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95703D3D2269A1B2008F2A61 /* MainPageViewController.swift */; };
 		95EE1D56226D944400C04B61 /* GamePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EE1D55226D944400C04B61 /* GamePageViewController.swift */; };
+		95EE1D58226D94EA00C04B61 /* GAMPIGameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EE1D57226D94EA00C04B61 /* GAMPIGameController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		95703D3B22699EB1008F2A61 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		95703D3D2269A1B2008F2A61 /* MainPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPageViewController.swift; sourceTree = "<group>"; };
 		95EE1D55226D944400C04B61 /* GamePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamePageViewController.swift; sourceTree = "<group>"; };
+		95EE1D57226D94EA00C04B61 /* GAMPIGameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GAMPIGameController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +74,7 @@
 				95703D3B22699EB1008F2A61 /* GradientView.swift */,
 				95703D3D2269A1B2008F2A61 /* MainPageViewController.swift */,
 				95EE1D55226D944400C04B61 /* GamePageViewController.swift */,
+				95EE1D57226D94EA00C04B61 /* GAMPIGameController.swift */,
 			);
 			path = GAMPI;
 			sourceTree = "<group>";
@@ -150,6 +153,7 @@
 				95703D3E2269A1B2008F2A61 /* MainPageViewController.swift in Sources */,
 				95703D2F22699B63008F2A61 /* GAMPI.xcdatamodeld in Sources */,
 				95703D2922699B63008F2A61 /* ViewController.swift in Sources */,
+				95EE1D58226D94EA00C04B61 /* GAMPIGameController.swift in Sources */,
 				95703D3C22699EB1008F2A61 /* GradientView.swift in Sources */,
 				95703D2722699B63008F2A61 /* AppDelegate.swift in Sources */,
 				95EE1D56226D944400C04B61 /* GamePageViewController.swift in Sources */,
