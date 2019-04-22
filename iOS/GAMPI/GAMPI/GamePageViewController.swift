@@ -43,6 +43,7 @@ class GamePageViewController: UIViewController {
         goal_board.append(goal_board_row1)
         goal_board.append(goal_board_row2)
         goal_board.append(goal_board_row3)
+        self.restart_game()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -56,7 +57,7 @@ class GamePageViewController: UIViewController {
     
     //a function to trigger the gameover notification
     @objc func handleNotificationGameDidEnd(_ notification: Notification) {
-        if let userInfo = notification.userInfo{
+        if notification.userInfo != nil {
             let message = "Puzzles completed! \nPlay again?"
             let alert = UIAlertController(title: "Good Job!", message: message, preferredStyle: .alert)
             let restartAction = UIAlertAction(title: "Yep", style: .default, handler: ({(_: UIAlertAction) -> Void in self.restart_game()}))
@@ -85,34 +86,47 @@ class GamePageViewController: UIViewController {
     @objc func swipeResponse(gesture: UISwipeGestureRecognizer) {
         switch gesture.direction {
         case UISwipeGestureRecognizer.Direction.up:
-            print("Swiped up")
+            //print("Swiped up")
             //call game controller's move function
+            game_controller.move(direction: "UP")
             //render the new images according to the new tiles at new positions
+            render_gameboard()
             //update the game state
+            game_controller.updateGameState()
         case UISwipeGestureRecognizer.Direction.down:
-            print("Swiped down")
-
+            //print("Swiped down")
+            game_controller.move(direction: "DOWN")
+            render_gameboard()
+            game_controller.updateGameState()
         case UISwipeGestureRecognizer.Direction.left:
-            print("Swiped left")
-
+            //print("Swiped left")
+            game_controller.move(direction: "LEFT")
+            render_gameboard()
+            game_controller.updateGameState()
         case UISwipeGestureRecognizer.Direction.right:
-            print("Swiped right")
-
+            //print("Swiped right")
+            game_controller.move(direction: "RIGHT")
+            render_gameboard()
+            game_controller.updateGameState()
         default:
             break
         }
-        //update the number of moves
+        //update the number of moves?
+        //Why bother...
     }
     
     private func restart_game() {
         //call game controller's restart game
-        //render the images
+        self.game_controller.reset_game()
+        //render the images for goal and game boards
+        self.render_gameboard()
+        self.render_goalboard()
     }
     
     private func render_goalboard() {
         for row in 0...2 {
             for column in 0...2 {
-                //self.goal_board[row][column].image = UIImage(named: "\(game_controller.goalboard[row][column]).png")
+                self.goal_board[row][column].image = UIImage(named: "\(game_controller.goal_board[row][column]).png")
             }
         }
     }
@@ -120,7 +134,7 @@ class GamePageViewController: UIViewController {
     private func render_gameboard() {
         for row in 0...4 {
             for column in 0...4 {
-                //self.game_board[row][column].image = UIImage(named: "\(game_controller.gameboard[row][column]).png")
+                self.game_board[row][column].image = UIImage(named: "\(game_controller.game_board[row][column]).png")
             }
         }
     }

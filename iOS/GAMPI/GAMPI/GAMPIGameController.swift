@@ -43,18 +43,39 @@ class GAMPIGameController {
                             ["g", "c", "c", "y", "b"],
                             ["g", "o", "o", "o", "o"]]
         self.shuffle(n: 20)
-        //retrieve the middle 3x3 and assign it to the goal_board
-        self.shuffle(n: 20)
+        self.printBoard()
+        self.goal_board = self.retrieveCenterSquare()
+        self.shuffle(n: 2)
+        self.updateEmptyTileCoord()
         self.num_moves = 0
         self.game_state = .in_progress
     }
     
-    //shuffle the goal_board and the game_board
+    //shuffle the game_board
     func shuffle(n: Int) {
-        
+        var directions = getAvailableMoves()
+        var random_number  = Int.random(in: 0..<directions.count)
+        for _ in 0..<n {
+            move(direction: directions[random_number])
+            self.updateEmptyTileCoord()
+            directions = getAvailableMoves()
+            random_number = Int.random(in: 0..<directions.count)
+        }
     }
     
-    //move the blank tile
+    //retrieving the center 3x3 square of the current game board
+    private func retrieveCenterSquare() -> [[String]]{
+        var center_square = [["","",""],["","",""],["","",""]]
+        for row in 1...3 {
+            for column in 1...3 {
+                center_square[row-1][column-1] = self.game_board[row][column]
+            }
+        }
+        return center_square
+    }
+    
+    //move the blank tile UP, DOWN, LEFT and RIGHT
+    //updating the gameboard accordingly
     func move(direction: String) {
         switch direction {
         case "UP":
@@ -66,7 +87,7 @@ class GAMPIGameController {
             }
             break
         case "DOWN":
-            if empty_row < 2 {
+            if empty_row < 4 {
                 let temp = game_board[empty_row+1][empty_col]
                 game_board[empty_row+1][empty_col] = game_board[empty_row][empty_col]
                 game_board[empty_row][empty_col] = temp
@@ -82,7 +103,7 @@ class GAMPIGameController {
             }
             break
         case "RIGHT":
-            if empty_col < 2 {
+            if empty_col < 4 {
                 let temp = game_board[empty_row][empty_col+1]
                 game_board[empty_row][empty_col+1] = game_board[empty_row][empty_col]
                 game_board[empty_row][empty_col] = temp
@@ -93,6 +114,7 @@ class GAMPIGameController {
             //throw error
             break
         }
+        self.updateEmptyTileCoord()
     }
     
     //retrieve a list of valid moves for the player to move the blank tile
@@ -114,7 +136,7 @@ class GAMPIGameController {
     }
     
     //update the coordinates of the empty tile
-    private func updateEmptyCoord() {
+    private func updateEmptyTileCoord() {
         for row in 0...4 {
             for column in 0...4 {
                 if game_board[row][column] == "e" {
@@ -124,10 +146,7 @@ class GAMPIGameController {
             }
         }
     }
-    
-    func gameOverNotification() {
-        NotificationCenter.default.post(name: Notification.Name(rawValue: "GAMPI Game Over"), object: self, userInfo: nil)
-    }
+
     
     func updateGameState() {
         switch game_state {
@@ -137,25 +156,28 @@ class GAMPIGameController {
             }
             break
         case .gameover:
-            self.gameoverAction()
+            self.generate_gameover_notification()
             break
         }
     }
     
+    //the player has won if the current gameboard center matches the goal board
     private func hasWon() -> Bool {
-        //retrieve the center 3x3 and compare it to gameboard
-        return false
+        let current_center = self.retrieveCenterSquare()
+        self.printBoard()
+        return  current_center[0] == self.game_board[0] &&
+                current_center[1] == self.game_board[1] &&
+                current_center[2] == self.game_board[2]
     }
     
     private func updateToGameOver() {
         game_state = .gameover
-        gameoverAction()
+        self.generate_gameover_notification()
     }
     
-    private func gameoverAction() {
-        gameOverNotification()
+    func generate_gameover_notification() {
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "GAMPI Game Over"), object: self, userInfo: ["number of moves": self.num_moves])
     }
-    
     
     //for debugging purposes: print the gameboard
     private func printBoard() {
