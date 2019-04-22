@@ -21,11 +21,15 @@ class GamePageViewController: UIViewController {
     @IBOutlet var goal_board_row2: [UIImageView]!
     @IBOutlet var goal_board_row3: [UIImageView]!
     
+    @IBOutlet weak var player_no_label: UILabel!
+    
     var game_board : [[UIImageView]]
     
     var goal_board : [[UIImageView]]
     
     var game_controller : GAMPIGameController
+    
+    var is_multiplayer = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,6 +50,21 @@ class GamePageViewController: UIViewController {
         self.goal_board = [[UIImageView]]()
         self.game_controller = GAMPIGameController()
         super.init(coder: aDecoder)
+        let aSelector : Selector = #selector(GamePageViewController.handleNotificationGameDidEnd(_: ))
+        NotificationCenter.default.addObserver(self, selector: aSelector, name: NSNotification.Name(rawValue: "GAMPI Game Over"), object: game_controller)
+    }
+    
+    //a function to trigger the gameover notification
+    @objc func handleNotificationGameDidEnd(_ notification: Notification) {
+        if let userInfo = notification.userInfo{
+            let message = "Puzzles completed! \nPlay again?"
+            let alert = UIAlertController(title: "Good Job!", message: message, preferredStyle: .alert)
+            let restartAction = UIAlertAction(title: "Yep", style: .default, handler: ({(_: UIAlertAction) -> Void in self.restart_game()}))
+            let quitAction = UIAlertAction(title: "Nope", style: .default, handler: ({(_: UIAlertAction) -> Void in self.quit_game()}))
+            alert.addAction(restartAction)
+            alert.addAction(quitAction)
+            present(alert, animated: true, completion: nil)
+        }
     }
     
     private func initializeSwipeGestures() {
@@ -88,6 +107,26 @@ class GamePageViewController: UIViewController {
     private func restart_game() {
         //call game controller's restart game
         //render the images
+    }
+    
+    private func render_goalboard() {
+        for row in 0...2 {
+            for column in 0...2 {
+                //self.goal_board[row][column].image = UIImage(named: "\(game_controller.goalboard[row][column]).png")
+            }
+        }
+    }
+    
+    private func render_gameboard() {
+        for row in 0...4 {
+            for column in 0...4 {
+                //self.game_board[row][column].image = UIImage(named: "\(game_controller.gameboard[row][column]).png")
+            }
+        }
+    }
+    
+    private func quit_game() {
+        dismiss(animated: true, completion: nil)
     }
 
 }
