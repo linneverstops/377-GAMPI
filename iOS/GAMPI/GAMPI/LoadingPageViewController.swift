@@ -1,5 +1,5 @@
 //
-//  ConnectingViewController.swift
+//  LoadingPageViewController.swift
 //  GAMPI
 //
 //  Created by Dennis Lin on 4/22/19.
@@ -8,17 +8,16 @@
 
 import UIKit
 
-class ConnectingViewController: UIViewController {
+class LoadingPageViewController: UIViewController {
 
     @IBOutlet weak var quit_button: UIButton!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
     
-
+    
     @IBAction func quit(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
