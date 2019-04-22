@@ -165,9 +165,7 @@ class GAMPIGameController {
     private func hasWon() -> Bool {
         let current_center = self.retrieveCenterSquare()
         self.print_goalboard()
-        return  current_center[0] == self.game_board[0] &&
-                current_center[1] == self.game_board[1] &&
-                current_center[2] == self.game_board[2]
+        return current_center == self.goal_board
     }
     
     private func updateToGameOver() {
