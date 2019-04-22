@@ -43,7 +43,7 @@ class GAMPIGameController {
                             ["g", "c", "c", "y", "b"],
                             ["g", "o", "o", "o", "o"]]
         self.shuffle(n: 20)
-        self.printBoard()
+        self.print_gameboard()
         self.goal_board = self.retrieveCenterSquare()
         self.shuffle(n: 2)
         self.updateEmptyTileCoord()
@@ -164,7 +164,7 @@ class GAMPIGameController {
     //the player has won if the current gameboard center matches the goal board
     private func hasWon() -> Bool {
         let current_center = self.retrieveCenterSquare()
-        self.printBoard()
+        self.print_goalboard()
         return  current_center[0] == self.game_board[0] &&
                 current_center[1] == self.game_board[1] &&
                 current_center[2] == self.game_board[2]
@@ -180,8 +180,15 @@ class GAMPIGameController {
     }
     
     //for debugging purposes: print the gameboard
-    private func printBoard() {
+    private func print_gameboard() {
         for row in game_board {
+            print(row)
+        }
+        print("\n")
+    }
+    
+    private func print_goalboard() {
+        for row in goal_board {
             print(row)
         }
         print("\n")
