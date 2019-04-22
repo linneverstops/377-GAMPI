@@ -22,6 +22,7 @@ class GamePageViewController: UIViewController {
     @IBOutlet var goal_board_row3: [UIImageView]!
     
     @IBOutlet weak var player_no_label: UILabel!
+    @IBOutlet weak var restart_button: UIButton!
     
     var game_board : [[UIImageView]]
     
@@ -114,6 +115,14 @@ class GamePageViewController: UIViewController {
         //update the number of moves?
         //Why bother...
     }
+    
+    //restart button for debug
+    //might not stay for actual game
+    //hmmmmm, we will see...
+    @IBAction func restart_button_pressed(_ sender: UIButton) {
+        self.restart_game()
+    }
+    
     
     private func restart_game() {
         //call game controller's restart game

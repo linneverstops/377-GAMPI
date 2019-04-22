@@ -44,13 +44,11 @@ class GAMPIGameController {
                             ["g", "o", "o", "o", "o"]]
         self.shuffle(n: 30)
         //make sure the empty tile is not inside the center square
-        while (self.isEmptyInsideCenterSquare()) {
-            print_goalboard()
-            self.shuffle(n: 3)
+        if (self.isEmptyInsideCenterSquare()) {
+            self.moveEmptyOut()
         }
         self.goal_board = self.retrieveCenterSquare()
         self.shuffle(n: 10)
-        self.updateEmptyTileCoord()
         self.num_moves = 0
         self.game_state = .in_progress
     }
@@ -69,9 +67,20 @@ class GAMPIGameController {
     }
     
     private func isEmptyInsideCenterSquare() -> Bool {
-        return empty_row > 1 || empty_row < 4 || empty_col > 1 || empty_col < 4
+        return (empty_row > 1 || empty_row < 4) && (empty_col > 1 || empty_col < 4)
     }
     
+    private func moveEmptyOut() {
+        let vert_move = empty_col
+        let hor_move = empty_row
+        for _ in 0...vert_move {
+            self.move(direction: "UP")
+        }
+        for _ in 0...hor_move {
+            self.move(direction: "LEFT")
+        }
+        self.updateEmptyTileCoord()
+    }
     
     //retrieving the center 3x3 square of the current game board
     private func retrieveCenterSquare() -> [[String]]{
