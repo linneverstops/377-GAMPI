@@ -23,6 +23,7 @@ class GamePageViewController: UIViewController {
     
     @IBOutlet weak var player_no_label: UILabel!
     @IBOutlet weak var restart_button: UIButton!
+    @IBOutlet weak var debug_button: UISwitch!
     
     var game_board : [[UIImageView]]
     
@@ -30,6 +31,7 @@ class GamePageViewController: UIViewController {
     
     var game_controller : GAMPIGameController
     
+    //for connecting to lampi
     var is_multiplayer = false
 
     override func viewDidLoad() {
@@ -123,10 +125,10 @@ class GamePageViewController: UIViewController {
         self.restart_game()
     }
     
-    
     private func restart_game() {
+        //for debug only
         //call game controller's restart game
-        self.game_controller.reset_game()
+        self.game_controller.reset_game(debug: self.debug_button.isOn)
         //render the images for goal and game boards
         self.render_gameboard()
         self.render_goalboard()

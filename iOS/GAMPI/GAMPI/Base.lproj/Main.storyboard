@@ -251,6 +251,10 @@
                                     <action selector="restart_button_pressed:" destination="LKj-ou-BtJ" eventType="touchUpInside" id="Ugi-AU-vLn"/>
                                 </connections>
                             </button>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R3p-Er-0Br">
+                                <rect key="frame" x="25" y="98" width="49" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </switch>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="sHl-Tx-z1U"/>
@@ -265,6 +269,7 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <connections>
+                        <outlet property="debug_button" destination="R3p-Er-0Br" id="iN2-NH-tNq"/>
                         <outlet property="player_no_label" destination="Dry-Do-xnc" id="uP5-7m-e8t"/>
                         <outlet property="restart_button" destination="ere-zF-gu8" id="rFb-E0-Fit"/>
                         <outletCollection property="game_board_row1" destination="SUX-xe-lI3" collectionClass="NSMutableArray" id="hyP-PN-ps9"/>

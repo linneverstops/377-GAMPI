@@ -36,24 +36,32 @@ class GAMPIGameController {
         self.game_state = .in_progress
     }
     
-    func reset_game() {
+    func reset_game(debug: Bool) {
         self.game_board = [ ["r", "r", "r", "r", "b"],
                             ["g", "c", "y", "y", "b"],
                             ["g", "c", "e", "y", "b"],
                             ["g", "c", "c", "y", "b"],
                             ["g", "o", "o", "o", "o"]]
-        self.shuffle(n: 30)
+        self.shuffle(n: 100)
         //make sure the empty tile is not inside the center square
         if (self.isEmptyInsideCenterSquare()) {
             self.moveEmptyOut()
         }
         self.goal_board = self.retrieveCenterSquare()
-        self.shuffle(n: 10)
+        print("DEBUG: \(debug)")
+        if(debug) {
+            self.shuffle(n: 3)
+        }
+        else {
+            //need to determine the difficulty
+            //100 is way too hard.
+            self.shuffle(n: 50)
+        }
         self.num_moves = 0
         self.game_state = .in_progress
     }
     
-    //shuffle the game_board
+    //shuffle the game_board and update the empty tile coord
     func shuffle(n: Int) {
         var directions = getAvailableMoves()
         var random_number  = Int.random(in: 0..<directions.count)
@@ -66,10 +74,12 @@ class GAMPIGameController {
         self.updateEmptyTileCoord()
     }
     
+    //check if the empty tile is inside the 3x3 center square
     private func isEmptyInsideCenterSquare() -> Bool {
         return (empty_row > 1 || empty_row < 4) && (empty_col > 1 || empty_col < 4)
     }
     
+    //move the empty tile out of the center square
     private func moveEmptyOut() {
         let vert_move = empty_col
         let hor_move = empty_row
@@ -183,7 +193,7 @@ class GAMPIGameController {
     //the player has won if the current gameboard center matches the goal board
     private func hasWon() -> Bool {
         let current_center = self.retrieveCenterSquare()
-        self.print_goalboard()
+        //self.print_goalboard()
         return current_center == self.goal_board
     }
     
