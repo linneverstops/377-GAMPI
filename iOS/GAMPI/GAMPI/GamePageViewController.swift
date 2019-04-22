@@ -24,13 +24,11 @@ class GamePageViewController: UIViewController {
     @IBOutlet weak var player_no_label: UILabel!
     @IBOutlet weak var restart_button: UIButton!
     @IBOutlet weak var debug_button: UISwitch!
+    @IBOutlet weak var quit_button: UIButton!
     
     var game_board : [[UIImageView]]
-    
     var goal_board : [[UIImageView]]
-    
     var game_controller : GAMPIGameController
-    
     //for connecting to lampi
     var is_multiplayer = false
 
@@ -123,6 +121,10 @@ class GamePageViewController: UIViewController {
     //hmmmmm, we will see...
     @IBAction func restart_button_pressed(_ sender: UIButton) {
         self.restart_game()
+    }
+    
+    @IBAction func quit(_ sender: UIButton) {
+        self.quit_game()
     }
     
     private func restart_game() {
