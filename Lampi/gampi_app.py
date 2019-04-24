@@ -1,16 +1,19 @@
 import kivy
 from kivy.app import App
 from kivy.uix.gridlayout import GridLayout
+from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import ListProperty, NumericProperty, StringProperty
 from kivy.graphics import Color
+from kivy.uix.button import Button
 import random
+
+class Btn(Button):
+    pass
 
 class Grid(GridLayout):
     pass
 
 class GampiApp(App):
-    def build(self):
-        return Grid()
     dict = {"#FF0000": 4,
             "#0000FF": 4,
             "#00FFFF": 4,
