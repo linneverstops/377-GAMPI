@@ -89,24 +89,24 @@ class GamePageViewController: UIViewController {
         case UISwipeGestureRecognizer.Direction.up:
             //print("Swiped up")
             //call game controller's move function
-            game_controller.move(direction: "UP")
+            game_controller.move(direction: "DOWN")
             //render the new images according to the new tiles at new positions
             render_gameboard()
             //update the game state
             game_controller.updateGameState()
         case UISwipeGestureRecognizer.Direction.down:
             //print("Swiped down")
-            game_controller.move(direction: "DOWN")
+            game_controller.move(direction: "UP")
             render_gameboard()
             game_controller.updateGameState()
         case UISwipeGestureRecognizer.Direction.left:
             //print("Swiped left")
-            game_controller.move(direction: "LEFT")
+            game_controller.move(direction: "RIGHT")
             render_gameboard()
             game_controller.updateGameState()
         case UISwipeGestureRecognizer.Direction.right:
             //print("Swiped right")
-            game_controller.move(direction: "RIGHT")
+            game_controller.move(direction: "LEFT")
             render_gameboard()
             game_controller.updateGameState()
         default:
