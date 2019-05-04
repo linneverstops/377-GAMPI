@@ -21,7 +21,7 @@ class GamePageViewController: UIViewController {
     @IBOutlet var goal_board_row2: [UIImageView]!
     @IBOutlet var goal_board_row3: [UIImageView]!
     
-    @IBOutlet weak var player_no_label: UILabel!
+    //@IBOutlet weak var player_no_label: UILabel!
     @IBOutlet weak var restart_button: UIButton!
     @IBOutlet weak var debug_button: UISwitch!
     @IBOutlet weak var quit_button: UIButton!
@@ -89,31 +89,31 @@ class GamePageViewController: UIViewController {
         case UISwipeGestureRecognizer.Direction.up:
             //print("Swiped up")
             //call game controller's move function
-            game_controller.move(direction: "DOWN")
+            game_controller.move(direction: "UP")
             //render the new images according to the new tiles at new positions
             render_gameboard()
             //update the game state
             game_controller.updateGameState()
         case UISwipeGestureRecognizer.Direction.down:
             //print("Swiped down")
-            game_controller.move(direction: "UP")
+            game_controller.move(direction: "DOWN")
             render_gameboard()
             game_controller.updateGameState()
         case UISwipeGestureRecognizer.Direction.left:
             //print("Swiped left")
-            game_controller.move(direction: "RIGHT")
+            game_controller.move(direction: "LEFT")
             render_gameboard()
             game_controller.updateGameState()
         case UISwipeGestureRecognizer.Direction.right:
             //print("Swiped right")
-            game_controller.move(direction: "LEFT")
+            game_controller.move(direction: "RIGHT")
             render_gameboard()
             game_controller.updateGameState()
         default:
             break
-        }
         //update the number of moves?
         //Why bother...
+        }
     }
     
     //restart button for debug
@@ -155,5 +155,11 @@ class GamePageViewController: UIViewController {
     private func quit_game() {
         dismiss(animated: true, completion: nil)
     }
+    
+    
+    
+    
+    
+    
 
 }
