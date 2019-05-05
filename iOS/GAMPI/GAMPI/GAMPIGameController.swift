@@ -48,7 +48,7 @@ class GAMPIGameController {
             self.moveEmptyOut()
         }
         self.goal_board = self.retrieveCenterSquare()
-        print("DEBUG: \(debug)")
+        //print("DEBUG: \(debug)")
         if(debug) {
             self.shuffle(n: 3)
         }
@@ -144,6 +144,8 @@ class GAMPIGameController {
             break
         }
         self.updateEmptyTileCoord()
+        //print_gameboard()
+        //print_goalboard()
     }
     
     //retrieve a list of valid moves for the player to move the blank tile

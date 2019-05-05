@@ -21,7 +21,7 @@ class GamePageViewController: UIViewController {
     @IBOutlet var goal_board_row2: [UIImageView]!
     @IBOutlet var goal_board_row3: [UIImageView]!
     
-    @IBOutlet weak var player_no_label: UILabel!
+    //@IBOutlet weak var player_no_label: UILabel!
     @IBOutlet weak var restart_button: UIButton!
     @IBOutlet weak var debug_button: UISwitch!
     @IBOutlet weak var quit_button: UIButton!
@@ -111,9 +111,9 @@ class GamePageViewController: UIViewController {
             game_controller.updateGameState()
         default:
             break
-        }
         //update the number of moves?
         //Why bother...
+        }
     }
     
     //restart button for debug
@@ -155,5 +155,11 @@ class GamePageViewController: UIViewController {
     private func quit_game() {
         dismiss(animated: true, completion: nil)
     }
+    
+    
+    
+    
+    
+    
 
 }
