@@ -20,6 +20,7 @@ class GAMPIGameController {
     var empty_row : Int
     var empty_col : Int
     var game_state : GAMPIGameState
+    var is_multiplayer : Bool
     
     init() {
         self.goal_board = [["b", "r", "y"],
@@ -34,14 +35,22 @@ class GAMPIGameController {
         self.empty_col = 3
         self.num_moves = 0
         self.game_state = .in_progress
+        self.is_multiplayer = false
     }
     
-    func reset_game(debug: Bool) {
-        self.game_board = [ ["r", "r", "r", "r", "b"],
-                            ["g", "c", "y", "y", "b"],
-                            ["g", "c", "e", "y", "b"],
-                            ["g", "c", "c", "y", "b"],
-                            ["g", "o", "o", "o", "o"]]
+    func reset_game(is_multiplayer : Bool, debug: Bool, board: [[String]]) {
+        if(is_multiplayer) {
+            self.is_multiplayer = true
+            self.game_board = board
+            print_gameboard()
+        }
+        else {
+            self.game_board = [ ["r", "r", "r", "r", "b"],
+                                ["g", "c", "y", "y", "b"],
+                                ["g", "c", "e", "y", "b"],
+                                ["g", "c", "c", "y", "b"],
+                                ["g", "o", "o", "o", "o"]]
+        }
         self.shuffle(n: 100)
         //make sure the empty tile is not inside the center square
         if (self.isEmptyInsideCenterSquare()) {
@@ -50,7 +59,7 @@ class GAMPIGameController {
         self.goal_board = self.retrieveCenterSquare()
         //print("DEBUG: \(debug)")
         if(debug) {
-            self.shuffle(n: 3)
+            self.shuffle(n: 5)
         }
         else {
             //need to determine the difficulty
