@@ -31,6 +31,7 @@ class GampiGrid(GridLayout):
                 "#00FF00": 4,
                 "#FFA500": 4,
                 "#000000": 1}
+
         rgbaDict = {"#FF0000": [1, 0, 0, 1],
                  "#0000FF": [0, 0, 1, 1],
                  "#00FFFF": [0, 1, 1, 1],
@@ -68,14 +69,18 @@ class GampiGrid(GridLayout):
                         grid_colors_txt.append(color_dict[color_list[index]] + "\n")
                         dict[color_list[index]] -=1
                         validColor = True
-        grid_colors = grid_colors_list
+        grid_colors = grid_colors_list[::-1]
+        grid_colors_txt = grid_colors_txt[::-1]
         grid_colors_file = open("board_colors.txt", "r+")
         grid_colors_file.truncate(0)
         grid_colors_file = open("board_colors.txt", "a")
         grid_colors_file.writelines(grid_colors_txt)
         grid_colors_file.close()
         for i in range(25):
-            GampiApp().grid_colors_list[i] = grid_colors_list[i]
+            GampiApp().grid_colors_list[-i] = grid_colors_list[-i]
+        print(GampiApp().grid_colors_txt)
+        for i in range(9):
+            print(self.children[i].background_color)
 
     def change_color(self, instance):
         rgbaDict = {"#FF0000": [1, 0, 0, 1],
@@ -88,7 +93,7 @@ class GampiGrid(GridLayout):
                 }
         nums = [6,7,8,11,12,13,16,17,18]
         for i in range(len(self.children)):
-            self.children[i].background_color = rgbaDict[GampiApp().grid_colors_list[nums[-i]]]
+            self.children[i].background_color = rgbaDict[GampiApp().grid_colors_list[nums[i]]]
 
     def __init__(self,**kwargs):
         super(GampiGrid,self).__init__(**kwargs)
@@ -110,10 +115,6 @@ class GampiMain(BoxLayout):
 class GampiApp(App):
     def build(self):
         return GampiMain()
-
-    def update_grid_colors(self, new_colors):
-        print("UPDATING")
-        self.grid_colors_list = new_colors
 
     print("CREATING BOARD")
     dict = {"#FF0000": 4,
@@ -146,7 +147,6 @@ class GampiApp(App):
     grid_colors = ListProperty([])
     grid_colors_list = []
     grid_colors_txt = []
-
     for i in range(25):
         validColor = False
         while not validColor:
@@ -165,14 +165,12 @@ class GampiApp(App):
                     dict[color_list[index]] -=1
                     validColor = True
 
-    grid_colors = grid_colors_list
-    for color in grid_colors_list:
-        print(color_dict[color])
+    grid_colors = grid_colors_list[::-1]
+    grid_colors_txt = grid_colors_txt[::-1]
     grid_colors_file = open("board_colors.txt", "r+")
     grid_colors_file.truncate(0)
     grid_colors_file = open("board_colors.txt", "a")
     grid_colors_file.writelines(grid_colors_txt)
     grid_colors_file.close()
-
 if __name__ == '__main__':
     GampiApp().run()
