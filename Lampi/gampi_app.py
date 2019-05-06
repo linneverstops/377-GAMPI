@@ -78,9 +78,6 @@ class GampiGrid(GridLayout):
         grid_colors_file.close()
         for i in range(25):
             GampiApp().grid_colors_list[-i] = grid_colors_list[-i]
-        print(GampiApp().grid_colors_txt)
-        for i in range(9):
-            print(self.children[i].background_color)
 
     def change_color(self, instance):
         rgbaDict = {"#FF0000": [1, 0, 0, 1],

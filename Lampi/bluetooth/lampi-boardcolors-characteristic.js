@@ -1,7 +1,7 @@
 var util = require('util');
 var bleno = require('bleno');
 
-var CHARACTERISTIC_NAME = 'board_colors';
+var CHARACTERISTIC_NAME = 'BOARDCOLORS';
 
 function LampiBoardColorsCharacteristic(lampiState) {
   LampiBoardColorsCharacteristic.super_.call(this, {
@@ -45,7 +45,6 @@ LampiBoardColorsCharacteristic.prototype.onReadRequest = function(offset, callba
     callback(this.RESULT_ATTR_NOT_LONG, null);
   }
   else {
-    var data_arr = []
     var data = new Buffer(25);
     for (i=0; i< 25; i++){
         data.writeUInt8(this.lampiState.board_colors[i].charCodeAt(0), i);

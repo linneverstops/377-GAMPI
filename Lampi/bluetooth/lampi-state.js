@@ -5,6 +5,7 @@ var fs = require("fs");
 
 function LampiState() {
     events.EventEmitter.call(this);
+    console.log("Start Lampi State")
     this.board_colors = fs.readFileSync("../board_colors.txt").toString("utf-8");
     this.board_colors = this.board_colors.split("\n")
     this.board_colors.pop()
@@ -14,6 +15,18 @@ function LampiState() {
     this.has_received_first_update = false;
 
     var that = this;
+
+    fs.watchFile("../board_colors.txt", (curr, prev) => {
+        this.board_colors = fs.readFileSync("../board_colors.txt").toString("utf-8");
+        this.board_colors = this.board_colors.split("\n")
+        this.board_colors.pop()
+        console.log(this.board_colors)
+        this.is_on = true;
+        this.clientId = 'lamp_bt_peripheral';
+        this.has_received_first_update = false;
+        var that = this;
+    });
 }
+
 util.inherits(LampiState, events.EventEmitter);
 module.exports = LampiState;
