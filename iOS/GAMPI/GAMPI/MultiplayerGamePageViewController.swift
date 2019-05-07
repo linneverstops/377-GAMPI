@@ -14,13 +14,16 @@ class MultiplayerGamePageViewController: UIViewController, CBCentralManagerDeleg
     //Game UI
     @IBOutlet weak var status_label: UILabel!
     @IBOutlet weak var green_tick: UIImageView!
-    @IBOutlet weak var info_label: UILabel!
     @IBOutlet weak var status_indicator: UIActivityIndicatorView!
     @IBOutlet var board_row1: [UIImageView]!
     @IBOutlet var board_row2: [UIImageView]!
     @IBOutlet var board_row3: [UIImageView]!
     @IBOutlet var board_row4: [UIImageView]!
     @IBOutlet var board_row5: [UIImageView]!
+    @IBOutlet weak var background: UIImageView!
+    @IBOutlet weak var start_button: UIButton!
+    @IBOutlet weak var reload_button: UIButton!
+    
     var game_board : [[UIImageView]]
     var game_controller : GAMPIGameController
     var is_multiplayer = true
@@ -31,7 +34,7 @@ class MultiplayerGamePageViewController: UIViewController, CBCentralManagerDeleg
     var board_colors_characteristic: CBCharacteristic?
     
     var updatePending = false
-    let DEVICE_NAME = "LAMPI b827ebea4174"
+    let DEVICE_NAME = "GAMPI b827eb9e4116"
     let LAMP_SERVICE_UUID = "0001A7D3-D8A4-4FEA-8174-1736E808C067"
     let BOARD_COLORS_UUID = "0002A7D3-D8A4-4FEA-8174-1736E808C067"
     
@@ -45,6 +48,13 @@ class MultiplayerGamePageViewController: UIViewController, CBCentralManagerDeleg
         game_board.append(board_row3)
         game_board.append(board_row4)
         game_board.append(board_row5)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if self.bluetoothManager != nil && self.devicePeripheral != nil {
+            self.bluetoothManager?.connect(self.devicePeripheral!, options: nil)
+            print("Found \(DEVICE_NAME)")
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -65,12 +75,11 @@ class MultiplayerGamePageViewController: UIViewController, CBCentralManagerDeleg
     //a function to trigger the gameover notification
     @objc func handleNotificationGameDidEnd(_ notification: Notification) {
         if notification.userInfo != nil {
-            let message = "You won! \nOne more?"
-            let alert = UIAlertController(title: "Good Job!", message: message, preferredStyle: .alert)
-            let restartAction = UIAlertAction(title: "Yep", style: .default, handler: nil)
-            let quitAction = UIAlertAction(title: "Nope", style: .default, handler: nil)
+            let message = "Press SHUFFLE on the GAMPI to shuffle the board first."
+            let alert = UIAlertController(title: "You won!", message: message, preferredStyle: .alert)
+            let restartAction = UIAlertAction(title: "Done!", style: .default, handler: ({
+                (_: UIAlertAction) -> Void in self.transition_to_victory_view()}))
             alert.addAction(restartAction)
-            alert.addAction(quitAction)
             present(alert, animated: true, completion: nil)
         }
     }
@@ -125,7 +134,7 @@ class MultiplayerGamePageViewController: UIViewController, CBCentralManagerDeleg
     private func restart_game(board: [[String]]) {
         //for debug only
         //call game controller's restart game
-        self.game_controller.reset_game(is_multiplayer: true, debug: true, board: board)
+        self.game_controller.reset_game(is_multiplayer: true, debug: false, board: board)
         //render the images for goal and game boards
         self.render_gameboard()
     }
@@ -157,6 +166,7 @@ class MultiplayerGamePageViewController: UIViewController, CBCentralManagerDeleg
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         //print(central.state == .poweredOn)
         if central.state == .poweredOn {
+            print("Finding Lamp Service")
             let services = [CBUUID(string: LAMP_SERVICE_UUID)]
             bluetoothManager?.scanForPeripherals(withServices: services, options: nil)
         }
@@ -177,11 +187,14 @@ class MultiplayerGamePageViewController: UIViewController, CBCentralManagerDeleg
     }
     
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral devicePeripheral: CBPeripheral, error: Error?) {
+        
         print("Disconnected from peripheral \(devicePeripheral)")
+        self.bluetoothManager?.connect(devicePeripheral, options: nil)
     }
     
     func centralManager(_ central: CBCentralManager, didFailToConnect devicePeripheral: CBPeripheral, error: Error?) {
         print("Failed to connect to peripheral \(devicePeripheral)")
+        self.bluetoothManager?.connect(devicePeripheral, options: nil)
     }
     
     func peripheral(_ devicePeripheral: CBPeripheral, didDiscoverServices error: Error?) {
@@ -217,42 +230,84 @@ class MultiplayerGamePageViewController: UIViewController, CBCentralManagerDeleg
         if characteristic == board_colors_characteristic {
             let data: Data? = characteristic.value
             if data != nil {
-                let board = Float(Double(data?[0] ?? UInt8(0.0)) / Double(UINT8_MAX))
-                print("BOARD READ: \(board)")
-                self.transition_to_game_view()
+                let board = data!.map {String(UnicodeScalar(UInt8($0))).lowercased()}
+                self.new_board = self.convert_to_2DBoard(array: board)
                 self.restart_game(board: self.new_board)
             }
         }
     }
     
     @IBAction func quit_game(_ sender: UIButton) {
+        self.quit()
+    }
+    
+    @IBAction func start_game(_ sender: UIButton) {
+        self.devicePeripheral?.readValue(for: self.board_colors_characteristic!)
+        self.transition_to_game_view()
+    }
+    
+    @IBAction func reload_board(_ sender: UIButton) {
+        self.devicePeripheral?.readValue(for: self.board_colors_characteristic!)
+        //self.render_gameboard(true)
+    }
+    
+    private func quit() {
         dismiss(animated: false, completion: nil)
     }
     
     private func transition_to_connected_view() {
         self.status_label.text = "Connected!"
         self.status_indicator.isHidden = true
-        self.info_label.isHidden = false
+        self.green_tick.isHidden = false
+        self.devicePeripheral?.readValue(for: self.board_colors_characteristic!)
+        self.status_label.text = "Press Start!"
+        self.start_button.isHidden = false
     }
     
     private func transition_to_game_view() {
         self.status_label.isHidden = true
-        self.info_label.isHidden = true
+        self.start_button.isHidden = true
+        self.green_tick.isHidden = true
+        self.initializeSwipeGestures()
+        self.reload_button.isHidden = false
         self.render_gameboard(true)
     }
     
     private func render_gameboard(_ yes: Bool) {
         for row in self.game_board {
             for tile in row {
-                tile.isHidden = yes
+                tile.isHidden = !yes
             }
         }
+        self.background.isHidden = !yes
     }
     
     private func transition_to_victory_view() {
         self.render_gameboard(false)
-        self.status_label.text = "Press Start Game on the GAMPI!"
+        self.reload_button.isHidden = true
+        self.status_label.text = "Press SHUFFLE on the GAMPI. Then press Play!"
         self.status_label.isHidden = false
+        self.green_tick.isHidden = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+            self.devicePeripheral?.readValue(for: self.board_colors_characteristic!)
+            self.start_button.isHidden = false
+        }
+    }
+    
+    private func convert_to_2DBoard(array: [String]) -> [[String]] {
+        let results = array.chunked(into: 5)
+        return results
     }
 
+}
+
+
+//implemented from https://www.hackingwithswift.com/example-code/language/how-to-split-an-array-into-chunks
+//Created by Paul Hudson
+extension Array {
+    func chunked(into size: Int) -> [[Element]] {
+        return stride(from: 0, to: count, by: size).map {
+            Array(self[$0 ..< Swift.min($0 + size, count)])
+        }
+    }
 }

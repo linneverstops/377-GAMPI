@@ -42,7 +42,15 @@ class GAMPIGameController {
         if(is_multiplayer) {
             self.is_multiplayer = true
             self.game_board = board
-            print_gameboard()
+            self.goal_board = self.retrieveCenterSquare()
+            if(debug) {
+                self.shuffle(n: 5)
+            }
+            else {
+                //need to determine the difficulty
+                //100 is way too hard.
+                self.shuffle(n: 50)
+            }
         }
         else {
             self.game_board = [ ["r", "r", "r", "r", "b"],
@@ -50,22 +58,22 @@ class GAMPIGameController {
                                 ["g", "c", "e", "y", "b"],
                                 ["g", "c", "c", "y", "b"],
                                 ["g", "o", "o", "o", "o"]]
+            self.shuffle(n: 100)
+            //make sure the empty tile is not inside the center square
+            if (self.isEmptyInsideCenterSquare()) {
+                self.moveEmptyOut()
+            }
+            self.goal_board = self.retrieveCenterSquare()
+            if(debug) {
+                self.shuffle(n: 5)
+            }
+            else {
+                //need to determine the difficulty
+                //100 is way too hard.
+                self.shuffle(n: 50)
+            }
         }
-        self.shuffle(n: 100)
-        //make sure the empty tile is not inside the center square
-        if (self.isEmptyInsideCenterSquare()) {
-            self.moveEmptyOut()
-        }
-        self.goal_board = self.retrieveCenterSquare()
-        //print("DEBUG: \(debug)")
-        if(debug) {
-            self.shuffle(n: 5)
-        }
-        else {
-            //need to determine the difficulty
-            //100 is way too hard.
-            self.shuffle(n: 50)
-        }
+        self.print_goalboard()
         self.num_moves = 0
         self.game_state = .in_progress
     }

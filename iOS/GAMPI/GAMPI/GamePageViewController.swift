@@ -130,7 +130,7 @@ class GamePageViewController: UIViewController {
     private func restart_game() {
         //for debug only
         //call game controller's restart game
-        self.game_controller.reset_game(debug: self.debug_button.isOn)
+        self.game_controller.reset_game(is_multiplayer: false, debug: self.debug_button.isOn, board: [[""]])
         //render the images for goal and game boards
         self.render_gameboard()
         self.render_goalboard()
