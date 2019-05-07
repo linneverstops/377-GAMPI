@@ -32,14 +32,17 @@ class MultiplayerGamePageViewController: UIViewController, CBCentralManagerDeleg
     var devicePeripheral: CBPeripheral?
     //characteristics
     var board_colors_characteristic: CBCharacteristic?
-    
-    var updatePending = false
     let DEVICE_NAME = "GAMPI b827eb9e4116"
     let LAMP_SERVICE_UUID = "0001A7D3-D8A4-4FEA-8174-1736E808C067"
     let BOARD_COLORS_UUID = "0002A7D3-D8A4-4FEA-8174-1736E808C067"
-    
+    //storing new retrieved board
     var new_board : [[String]]
-
+    
+    //nightmode
+    @IBOutlet var gradient_view: GradientView!
+    var is_nightmode : Bool = false
+    var background_colors : [UIColor] = [UIColor.purple, UIColor.white]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -48,12 +51,21 @@ class MultiplayerGamePageViewController: UIViewController, CBCentralManagerDeleg
         game_board.append(board_row3)
         game_board.append(board_row4)
         game_board.append(board_row5)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         if self.bluetoothManager != nil && self.devicePeripheral != nil {
             self.bluetoothManager?.connect(self.devicePeripheral!, options: nil)
             print("Found \(DEVICE_NAME)")
+        }
+        if is_nightmode {
+            gradient_view.firstColor = UIColor.black
+            gradient_view.secondColor = UIColor.black
+        }
+        else {
+            gradient_view.firstColor = self.background_colors[0]
+            gradient_view.secondColor = self.background_colors[1]
         }
     }
     
@@ -66,7 +78,6 @@ class MultiplayerGamePageViewController: UIViewController, CBCentralManagerDeleg
                             ["g", "o", "o", "o", "o"]]
         self.game_controller = GAMPIGameController()
         super.init(coder: aDecoder)
-        updatePending = false
         self.bluetoothManager = CBCentralManager(delegate: self, queue: nil)
         let aSelector : Selector = #selector(GamePageViewController.handleNotificationGameDidEnd(_: ))
         NotificationCenter.default.addObserver(self, selector: aSelector, name: NSNotification.Name(rawValue: "GAMPI Game Over"), object: game_controller)

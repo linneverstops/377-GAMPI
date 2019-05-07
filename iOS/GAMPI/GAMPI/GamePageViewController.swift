@@ -10,7 +10,7 @@ import UIKit
 
 class GamePageViewController: UIViewController {
     
-    
+
     @IBOutlet var game_board_row1: [UIImageView]!
     @IBOutlet var game_board_row2: [UIImageView]!
     @IBOutlet var game_board_row3: [UIImageView]!
@@ -21,6 +21,7 @@ class GamePageViewController: UIViewController {
     @IBOutlet var goal_board_row2: [UIImageView]!
     @IBOutlet var goal_board_row3: [UIImageView]!
     
+    @IBOutlet var gradient_view: GradientView!
     //@IBOutlet weak var player_no_label: UILabel!
     @IBOutlet weak var restart_button: UIButton!
     @IBOutlet weak var debug_button: UISwitch!
@@ -31,6 +32,9 @@ class GamePageViewController: UIViewController {
     var game_controller : GAMPIGameController
     //for connecting to lampi
     var is_multiplayer = false
+    //nightmode
+    var is_nightmode : Bool = false
+    var background_colors : [UIColor] = [UIColor.purple, UIColor.white]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,6 +49,18 @@ class GamePageViewController: UIViewController {
         goal_board.append(goal_board_row2)
         goal_board.append(goal_board_row3)
         self.restart_game()
+        print(gradient_view.firstColor)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if is_nightmode {
+            gradient_view.firstColor = UIColor.black
+            gradient_view.secondColor = UIColor.black
+        }
+        else {
+            gradient_view.firstColor = self.background_colors[0]
+            gradient_view.secondColor = self.background_colors[1]
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {

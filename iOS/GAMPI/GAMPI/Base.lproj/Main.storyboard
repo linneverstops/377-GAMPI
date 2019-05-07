@@ -33,7 +33,7 @@
                                     <color key="titleColor" red="0.0" green="0.33024594750000003" blue="0.84646211140000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="QF0-3z-oIQ" kind="show" id="jqF-oB-8DO"/>
+                                    <segue destination="QF0-3z-oIQ" kind="show" identifier="toMultiPlayer" id="jqF-oB-8DO"/>
                                 </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="board" translatesAutoresizingMaskIntoConstraints="NO" id="Skh-WE-svQ">
@@ -152,7 +152,7 @@
                                     <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="LKj-ou-BtJ" kind="show" id="uEv-7z-yZv"/>
+                                    <segue destination="LKj-ou-BtJ" kind="show" identifier="toSinglePlayer" id="uEv-7z-yZv"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Ver 1.0.0" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ogF-2b-E0o">
@@ -162,6 +162,14 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OsE-Pi-unh">
+                                <rect key="frame" x="35" y="85" width="40" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="Moon"/>
+                                <connections>
+                                    <action selector="toggle_nightmode:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Rn8-iz-OK9"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <userDefinedRuntimeAttributes>
@@ -176,7 +184,9 @@
                     </view>
                     <navigationItem key="navigationItem" id="39e-fX-nPt"/>
                     <connections>
+                        <outlet property="gradient_view" destination="8bC-Xf-vdC" id="qJK-KN-Yyl"/>
                         <outlet property="multiplayer_btn" destination="K7B-pH-rHV" id="oWG-nG-Kla"/>
+                        <outlet property="nightmode_button" destination="OsE-Pi-unh" id="IFm-FQ-cdw"/>
                         <outlet property="singleplayer_btn" destination="hWF-An-BSR" id="pU9-KJ-Zhl"/>
                     </connections>
                 </viewController>
@@ -357,6 +367,7 @@
                     </view>
                     <connections>
                         <outlet property="background" destination="yxf-O5-54u" id="aUI-h2-Ozn"/>
+                        <outlet property="gradient_view" destination="Y7F-8m-cww" id="D5i-HY-QCM"/>
                         <outlet property="green_tick" destination="lXy-oT-fav" id="fqm-13-749"/>
                         <outlet property="reload_button" destination="iVB-bc-Ncd" id="Acy-MP-aRn"/>
                         <outlet property="start_button" destination="7FI-KO-5Xh" id="pQW-xh-OzI"/>
@@ -579,7 +590,6 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="sHl-Tx-z1U"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="color" keyPath="firstColor">
@@ -593,6 +603,7 @@
                     </view>
                     <connections>
                         <outlet property="debug_button" destination="R3p-Er-0Br" id="iN2-NH-tNq"/>
+                        <outlet property="gradient_view" destination="z0Z-Ww-bHv" id="Pnk-Hp-NBF"/>
                         <outlet property="quit_button" destination="V3R-KK-UDe" id="6ng-O1-QN2"/>
                         <outlet property="restart_button" destination="ere-zF-gu8" id="rFb-E0-Fit"/>
                         <outletCollection property="game_board_row4" destination="ifW-se-mSg" collectionClass="NSMutableArray" id="G07-TZ-NmA"/>
@@ -637,6 +648,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Moon" width="64" height="64"/>
         <image name="b" width="128" height="128"/>
         <image name="board" width="256" height="256"/>
         <image name="c" width="128" height="128"/>
