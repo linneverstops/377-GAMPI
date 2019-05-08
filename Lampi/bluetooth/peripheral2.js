@@ -8,18 +8,18 @@ var serviceName = 'LampiService';
 var bleno = require('bleno');
 var mqtt = require('mqtt');
  
-var LampiState = require('./lampi-state');
-var LampiService = require('./lampi-service');
-var DeviceInfoService = require('./device-info-service');
+var LampiState2 = require('./lampi-state2');
+var LampiService2 = require('./lampi-service2');
+var DeviceInfoService2 = require('./device-info-service2');
 
-var lampiState = new LampiState();
-var lampiService = new LampiService( lampiState );
-var deviceInfoService = new DeviceInfoService( 'CWRU', 'LAMPI', device_id);
+var lampiState = new LampiState2();
+var lampiService = new LampiService2( lampiState );
+var deviceInfoService = new DeviceInfoService2( 'CWRU', 'LAMPI', device_id);
 
 var bt_clientAddress = null;
 var bt_lastRssi = 0;
 
-var mqtt_clientId = 'lamp_bt_central';
+var mqtt_clientId = 'lamp_bt_central_2';
 var mqtt_client_connection_topic = 'lamp/connection/' + mqtt_clientId + '/state';
 
 var mqtt_options = {

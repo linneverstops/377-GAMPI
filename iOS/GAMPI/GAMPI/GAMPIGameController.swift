@@ -73,7 +73,7 @@ class GAMPIGameController {
                 self.shuffle(n: 50)
             }
         }
-        self.print_goalboard()
+        //self.print_goalboard()
         self.num_moves = 0
         self.game_state = .in_progress
     }

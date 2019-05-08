@@ -49,7 +49,6 @@ class GamePageViewController: UIViewController {
         goal_board.append(goal_board_row2)
         goal_board.append(goal_board_row3)
         self.restart_game()
-        print(gradient_view.firstColor)
     }
     
     override func viewWillAppear(_ animated: Bool) {

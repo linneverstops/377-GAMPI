@@ -32,7 +32,7 @@ class MultiplayerGamePageViewController: UIViewController, CBCentralManagerDeleg
     var devicePeripheral: CBPeripheral?
     //characteristics
     var board_colors_characteristic: CBCharacteristic?
-    let DEVICE_NAME = "GAMPI b827eb9e4116"
+    let DEVICE_NAME = "b827eb9e4116"
     let LAMP_SERVICE_UUID = "0001A7D3-D8A4-4FEA-8174-1736E808C067"
     let BOARD_COLORS_UUID = "0002A7D3-D8A4-4FEA-8174-1736E808C067"
     //storing new retrieved board
@@ -184,10 +184,11 @@ class MultiplayerGamePageViewController: UIViewController, CBCentralManagerDeleg
     }
     
     func centralManager(_ central: CBCentralManager, didDiscover devicePeripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        if (devicePeripheral.name == DEVICE_NAME) {
+        print(devicePeripheral.name!)
+        if (devicePeripheral.name!.contains(DEVICE_NAME)) {
             self.devicePeripheral = devicePeripheral
             bluetoothManager?.connect(self.devicePeripheral!, options: nil)
-            print("Found \(DEVICE_NAME)")
+            print("Found \(devicePeripheral.name!)")
         }
     }
     
