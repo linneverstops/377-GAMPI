@@ -2,7 +2,7 @@
 var child_process = require('child_process');
 var device_id = child_process.execSync('cat /sys/class/net/eth0/address | sed s/://g').toString().replace(/\n$/, '');
 
-process.env['BLENO_DEVICE_NAME'] = 'GAMPI ' + device_id + " 1";
+process.env['BLENO_DEVICE_NAME'] = 'GAMPI ' + device_id + " 2";
 
 var serviceName = 'LampiService';
 var bleno = require('bleno');
