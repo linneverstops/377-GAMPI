@@ -12,7 +12,7 @@ from kivy.uix.widget import Widget
 class GampiButton(Button):
     def callback(self, instance):
         GampiGrid().changeAllViews()
-        self.text = "GAMPI STARTED!"
+        self.text = "SHUFFLE!"
     def __init__(self,**kwargs):
         super(GampiButton,self).__init__(**kwargs)
         self.text = "SHUFFLE!"
