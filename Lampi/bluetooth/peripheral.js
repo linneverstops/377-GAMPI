@@ -2,9 +2,9 @@
 var child_process = require('child_process');
 var device_id = child_process.execSync('cat /sys/class/net/eth0/address | sed s/://g').toString().replace(/\n$/, '');
 
-process.env['BLENO_DEVICE_NAME'] = 'GAMPI ' + device_id + " 1";
+process.env['BLENO_DEVICE_NAME'] = 'GAMPI ' + device_id;
 
-var serviceName = 'LampiService';
+var serviceName = 'GAMPI ' + device_id;
 var bleno = require('bleno');
 var mqtt = require('mqtt');
  
@@ -34,7 +34,7 @@ bleno.on('stateChange', function(state) {
     // We will also advertise the service ID in the advertising packet,
     // so it's easier to find.
     //
-    bleno.startAdvertising('LampiService', [lampiService.uuid, deviceInfoService.uuid], function(err)  {
+    bleno.startAdvertising('GAMPI ' + device_id, [lampiService.uuid, deviceInfoService.uuid], function(err)  {
       if (err) {
         console.log(err);
       }

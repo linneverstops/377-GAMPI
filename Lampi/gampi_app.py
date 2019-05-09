@@ -15,7 +15,7 @@ class GampiButton(Button):
         self.text = "GAMPI STARTED!"
     def __init__(self,**kwargs):
         super(GampiButton,self).__init__(**kwargs)
-        self.text = "Start Gampi!"
+        self.text = "SHUFFLE!"
         self.font_size = 30
         self.size_hint_y = 0.3
         self.background_color = [1, 0, 1, 1]

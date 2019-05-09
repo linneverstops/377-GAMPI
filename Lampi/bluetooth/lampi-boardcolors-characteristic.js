@@ -5,7 +5,7 @@ var CHARACTERISTIC_NAME = 'BOARDCOLORS';
 
 function LampiBoardColorsCharacteristic(lampiState) {
   LampiBoardColorsCharacteristic.super_.call(this, {
-    uuid: '0002A7D3-D8A4-4FEA-8174-1736E808C067',
+    uuid: '0001B7D3-D8A4-4FEA-8174-1736E808C067',
     properties: ['read'],
     secure: [],
     descriptors: [
