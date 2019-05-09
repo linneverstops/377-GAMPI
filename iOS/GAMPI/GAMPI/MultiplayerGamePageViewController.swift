@@ -32,9 +32,13 @@ class MultiplayerGamePageViewController: UIViewController, CBCentralManagerDeleg
     var devicePeripheral: CBPeripheral?
     //characteristics
     var board_colors_characteristic: CBCharacteristic?
-    let DEVICE_NAME = "b827eb9e4116"
-    let LAMP_SERVICE_UUID = "0001A7D3-D8A4-4FEA-8174-1736E808C067"
-    let BOARD_COLORS_UUID = "0002A7D3-D8A4-4FEA-8174-1736E808C067"
+    let DEVICE_NAME_1 = "GAMPI b827eb9e4116 1"
+    let DEVICE_NAME_2 = "GAMPI b827eb9e4116 2"
+    let LAMP_SERVICE_UUID_1 = "0001A7D3-D8A4-4FEA-8174-1736E808C067"
+    let LAMP_SERVICE_UUID_2 = "0002A7D3-D8A4-4FEA-8174-1736E808C067"
+    let BOARD_COLORS_UUID_1 = "0001B7D3-D8A4-4FEA-8174-1736E808C067"
+    let BOARD_COLORS_UUID_2 = "0002B7D3-D8A4-4FEA-8174-1736E808C067"
+    var device_num = 1
     //storing new retrieved board
     var new_board : [[String]]
     
@@ -57,7 +61,8 @@ class MultiplayerGamePageViewController: UIViewController, CBCentralManagerDeleg
     override func viewWillAppear(_ animated: Bool) {
         if self.bluetoothManager != nil && self.devicePeripheral != nil {
             self.bluetoothManager?.connect(self.devicePeripheral!, options: nil)
-            print("Found \(DEVICE_NAME)")
+            let deviceName = devicePeripheral!.name!
+            print("Found Device \(deviceName)")
         }
         if is_nightmode {
             gradient_view.firstColor = UIColor.black
@@ -159,47 +164,65 @@ class MultiplayerGamePageViewController: UIViewController, CBCentralManagerDeleg
     }
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     //BLUETOOTH CODE
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         //print(central.state == .poweredOn)
         if central.state == .poweredOn {
             print("Finding Lamp Service")
-            let services = [CBUUID(string: LAMP_SERVICE_UUID)]
+//            if device_num == 1 {
+            let services = [CBUUID(string: LAMP_SERVICE_UUID_1)]
             bluetoothManager?.scanForPeripherals(withServices: services, options: nil)
+//            }
+//            else if device_num == 2 {
+//                let services = [CBUUID(string: LAMP_SERVICE_UUID_2)]
+//                bluetoothManager?.scanForPeripherals(withServices: services, options: nil)
+//            }
+        }
+    }
+    
+    func peripheral(_ devicePeripheral: CBPeripheral, didDiscoverServices error: Error?) {
+        for service in devicePeripheral.services ?? [] {
+//            if service.uuid.isEqual(CBUUID(string: LAMP_SERVICE_UUID_1)) {
+            print("Found LAMP_SERVICE")
+            print("Searching for Characteristics in this service...")
+            devicePeripheral.discoverCharacteristics(nil, for: service)
+//            }
         }
     }
     
     func centralManager(_ central: CBCentralManager, didDiscover devicePeripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         print(devicePeripheral.name!)
-        if (devicePeripheral.name!.contains(DEVICE_NAME)) {
+//        if device_num == 1 {
+        if (devicePeripheral.name == DEVICE_NAME_1) {
             self.devicePeripheral = devicePeripheral
             bluetoothManager?.connect(self.devicePeripheral!, options: nil)
-            print("Found \(devicePeripheral.name!)")
+//            self.device_num = 1
+            print("Found DEVICE 1")
         }
+//        }
+//        else if device_num == 2 {
+//            if (devicePeripheral.name == DEVICE_NAME_2) {
+//                self.devicePeripheral = devicePeripheral
+//                bluetoothManager?.connect(self.devicePeripheral!, options: nil)
+//                self.device_num = 2
+//                print("Found DEVICE 2")
+//            }
+//        }
     }
     
     func centralManager(_ central: CBCentralManager, didConnect devicePeripheral: CBPeripheral) {
         print("Connected to peripheral \(devicePeripheral)")
         devicePeripheral.delegate = self
-        devicePeripheral.discoverServices([CBUUID(string: LAMP_SERVICE_UUID)])
+//        if self.device_num == 1 {
+        devicePeripheral.discoverServices([CBUUID(string: LAMP_SERVICE_UUID_1)])
+//        }
+//        else if self.device_num == 2 {
+//            devicePeripheral.discoverServices([CBUUID(string: LAMP_SERVICE_UUID_2)])
+//        }
     }
     
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral devicePeripheral: CBPeripheral, error: Error?) {
-        
         print("Disconnected from peripheral \(devicePeripheral)")
         self.bluetoothManager?.connect(devicePeripheral, options: nil)
     }
@@ -209,28 +232,28 @@ class MultiplayerGamePageViewController: UIViewController, CBCentralManagerDeleg
         self.bluetoothManager?.connect(devicePeripheral, options: nil)
     }
     
-    func peripheral(_ devicePeripheral: CBPeripheral, didDiscoverServices error: Error?) {
-        print("SEARCHING FOR SERVICES")
-        for service in devicePeripheral.services ?? [] {
-            if service.uuid.isEqual(CBUUID(string: LAMP_SERVICE_UUID)) {
-                print("Found LAMP_SERVICE")
-                print("Searching for Characteristics in this service...")
-                devicePeripheral.discoverCharacteristics(nil, for: service)
-            }
-        }
-        
-    }
+
     
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         for characteristic in service.characteristics ?? [] {
-            //sample
-            if characteristic.uuid.isEqual(CBUUID(string: BOARD_COLORS_UUID)) {
-                print("Found characteristic: BOARD_COLORS")
+//            if self.device_num == 1 {
+            if characteristic.uuid.isEqual(CBUUID(string: BOARD_COLORS_UUID_1)) {
+                print("Found characteristic: BOARD_COLORS_1")
                 self.board_colors_characteristic = characteristic
                 devicePeripheral?.readValue(for: characteristic)
                 devicePeripheral?.setNotifyValue(true, for: characteristic)
                 self.transition_to_connected_view()
             }
+//            }
+//            else if self.device_num == 2 {
+//                if characteristic.uuid.isEqual(CBUUID(string: BOARD_COLORS_UUID_2)) {
+//                    print("Found characteristic: BOARD_COLORS_2")
+//                    self.board_colors_characteristic = characteristic
+//                    devicePeripheral?.readValue(for: characteristic)
+//                    devicePeripheral?.setNotifyValue(true, for: characteristic)
+//                    self.transition_to_connected_view()
+//                }
+//            }
         }
     }
     
@@ -315,7 +338,7 @@ class MultiplayerGamePageViewController: UIViewController, CBCentralManagerDeleg
 
 
 //implemented from https://www.hackingwithswift.com/example-code/language/how-to-split-an-array-into-chunks
-//Created by Paul Hudson
+//Function created by Paul Hudson
 extension Array {
     func chunked(into size: Int) -> [[Element]] {
         return stride(from: 0, to: count, by: size).map {
