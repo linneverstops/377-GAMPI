@@ -12,6 +12,15 @@ enum GAMPIGameState: Int {
     case in_progress = 0, gameover
 }
 
+enum GAMPIDifficulty: Int {
+    case debug = 10
+    case easy = 20
+    case medium = 50
+    case hard = 70
+    case difficult = 100
+    case impossible = 200
+}
+
 class GAMPIGameController {
     
     var goal_board : [[String]]
@@ -21,6 +30,10 @@ class GAMPIGameController {
     var empty_col : Int
     var game_state : GAMPIGameState
     var is_multiplayer : Bool
+    
+    //timer
+    //timer
+    var start_time : CFAbsoluteTime!
     
     init() {
         self.goal_board = [["b", "r", "y"],
@@ -38,19 +51,15 @@ class GAMPIGameController {
         self.is_multiplayer = false
     }
     
-    func reset_game(is_multiplayer : Bool, debug: Bool, board: [[String]]) {
+    func reset_game(is_multiplayer : Bool, difficulty: GAMPIDifficulty, board: [[String]]) {
+        print("Difficulty: \(difficulty)")
         if(is_multiplayer) {
             self.is_multiplayer = true
             self.game_board = board
             self.goal_board = self.retrieveCenterSquare()
-            if(debug) {
-                self.shuffle(n: 5)
-            }
-            else {
-                //need to determine the difficulty
-                //100 is way too hard.
-                self.shuffle(n: 50)
-            }
+            //need to determine the difficulty
+            //100 is way too hard.
+            self.shuffle(n: difficulty.rawValue)
         }
         else {
             self.game_board = [ ["r", "r", "r", "r", "b"],
@@ -64,18 +73,12 @@ class GAMPIGameController {
                 self.moveEmptyOut()
             }
             self.goal_board = self.retrieveCenterSquare()
-            if(debug) {
-                self.shuffle(n: 5)
-            }
-            else {
-                //need to determine the difficulty
-                //100 is way too hard.
-                self.shuffle(n: 50)
-            }
+            self.shuffle(n: difficulty.rawValue)
         }
         //self.print_goalboard()
         self.num_moves = 0
         self.game_state = .in_progress
+        self.start_time = CFAbsoluteTimeGetCurrent()
     }
     
     //shuffle the game_board and update the empty tile coord
@@ -222,7 +225,8 @@ class GAMPIGameController {
     }
     
     func generate_gameover_notification() {
-        NotificationCenter.default.post(name: Notification.Name(rawValue: "GAMPI Game Over"), object: self, userInfo: ["number of moves": self.num_moves])
+        let time = Int(CFAbsoluteTimeGetCurrent() - self.start_time)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "GAMPI Game Over"), object: self, userInfo: ["time": time])
     }
     
     //for debugging purposes: print the gameboard

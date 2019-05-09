@@ -35,6 +35,10 @@ class GamePageViewController: UIViewController {
     //nightmode
     var is_nightmode : Bool = false
     var background_colors : [UIColor] = [UIColor.purple, UIColor.white]
+    
+    //difficulty
+    var difficulty : GAMPIDifficulty = .easy
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,14 +77,16 @@ class GamePageViewController: UIViewController {
     
     //a function to trigger the gameover notification
     @objc func handleNotificationGameDidEnd(_ notification: Notification) {
-        if notification.userInfo != nil {
-            let message = "Puzzles completed! \nPlay again?"
-            let alert = UIAlertController(title: "Good Job!", message: message, preferredStyle: .alert)
-            let restartAction = UIAlertAction(title: "Yep", style: .default, handler: ({(_: UIAlertAction) -> Void in self.restart_game()}))
-            let quitAction = UIAlertAction(title: "Nope", style: .default, handler: ({(_: UIAlertAction) -> Void in self.quit_game()}))
-            alert.addAction(restartAction)
-            alert.addAction(quitAction)
-            present(alert, animated: true, completion: nil)
+        if let userInfo = notification.userInfo {
+            if let time = userInfo["time"] {
+                let message = "You used \(time) secs. \nPlay again?"
+                let alert = UIAlertController(title: "Puzzle Completed!", message: message, preferredStyle: .alert)
+                let restartAction = UIAlertAction(title: "Yep", style: .default, handler: ({(_: UIAlertAction) -> Void in self.restart_game()}))
+                let quitAction = UIAlertAction(title: "Nope", style: .default, handler: ({(_: UIAlertAction) -> Void in self.quit_game()}))
+                alert.addAction(restartAction)
+                alert.addAction(quitAction)
+                present(alert, animated: true, completion: nil)
+            }
         }
     }
     
@@ -145,7 +151,7 @@ class GamePageViewController: UIViewController {
     private func restart_game() {
         //for debug only
         //call game controller's restart game
-        self.game_controller.reset_game(is_multiplayer: false, debug: self.debug_button.isOn, board: [[""]])
+        self.game_controller.reset_game(is_multiplayer: false, difficulty: self.difficulty, board: [[""]])
         //render the images for goal and game boards
         self.render_gameboard()
         self.render_goalboard()

@@ -15,14 +15,19 @@ class MainPageViewController: UIViewController {
     var is_nightmode : Bool = false
     @IBOutlet var gradient_view: GradientView!
     var background_colors : [UIColor] = [UIColor.purple, UIColor.white]
-    
     @IBOutlet weak var nightmode_button: UIButton!
-
+    
+    //difficulty
+    var difficulty : GAMPIDifficulty = .easy
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.background_colors = [self.gradient_view.firstColor, self.gradient_view.secondColor]
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+//        print(self.difficulty)
     }
     
     @IBAction func toggle_nightmode(_ sender: UIButton) {
@@ -50,15 +55,28 @@ class MainPageViewController: UIViewController {
                 let singlevc = segue.destination as! GamePageViewController
                 singlevc.is_nightmode = self.is_nightmode
                 singlevc.background_colors = self.background_colors
+                singlevc.difficulty = self.difficulty
                 break
             case "toMultiPlayer":
                 let multivc = segue.destination as! MultiplayerGamePageViewController
                 multivc.is_nightmode = self.is_nightmode
                 multivc.background_colors = self.background_colors
+                multivc.difficulty = self.difficulty
                 break
+            case "toSettings":
+                let settingsvc = segue.destination as! SettingsViewController
+                settingsvc.is_nightmode = self.is_nightmode
+                settingsvc.background_colors = self.background_colors
+                settingsvc.difficulty = self.difficulty
             default:
                 break
             }
+        }
+    }
+    
+    @IBAction func unwindFromSettings(segue: UIStoryboardSegue) {
+        if let settingsVC = segue.source as? SettingsViewController {
+            self.difficulty = settingsVC.difficulty
         }
     }
  

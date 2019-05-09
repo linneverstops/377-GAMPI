@@ -32,7 +32,7 @@ class MultiplayerGamePageViewController: UIViewController, CBCentralManagerDeleg
     var devicePeripheral: CBPeripheral?
     //characteristics
     var board_colors_characteristic: CBCharacteristic?
-    let DEVICE_NAME_1 = "GAMPI b827eb9e4116 1"
+    let DEVICE_NAME_1 = "GAMPI b827eb9e4116"
     let DEVICE_NAME_2 = "GAMPI b827eb9e4116 2"
     let LAMP_SERVICE_UUID_1 = "0001A7D3-D8A4-4FEA-8174-1736E808C067"
     let LAMP_SERVICE_UUID_2 = "0002A7D3-D8A4-4FEA-8174-1736E808C067"
@@ -47,6 +47,9 @@ class MultiplayerGamePageViewController: UIViewController, CBCentralManagerDeleg
     var is_nightmode : Bool = false
     var background_colors : [UIColor] = [UIColor.purple, UIColor.white]
     
+    //difficulty
+    var difficulty : GAMPIDifficulty = .easy
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -55,7 +58,7 @@ class MultiplayerGamePageViewController: UIViewController, CBCentralManagerDeleg
         game_board.append(board_row3)
         game_board.append(board_row4)
         game_board.append(board_row5)
-        
+        devicePeripheral = nil
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -90,13 +93,15 @@ class MultiplayerGamePageViewController: UIViewController, CBCentralManagerDeleg
     
     //a function to trigger the gameover notification
     @objc func handleNotificationGameDidEnd(_ notification: Notification) {
-        if notification.userInfo != nil {
-            let message = "Press SHUFFLE on the GAMPI to shuffle the board first."
-            let alert = UIAlertController(title: "You won!", message: message, preferredStyle: .alert)
-            let restartAction = UIAlertAction(title: "Done!", style: .default, handler: ({
-                (_: UIAlertAction) -> Void in self.transition_to_victory_view()}))
-            alert.addAction(restartAction)
-            present(alert, animated: true, completion: nil)
+        if let userInfo = notification.userInfo {
+            if let time = userInfo["time"] {
+                let message = "You used \(time) secs. \nPress SHUFFLE on the GAMPI."
+                let alert = UIAlertController(title: "Puzzle Completed!", message: message, preferredStyle: .alert)
+                let restartAction = UIAlertAction(title: "Done!", style: .default, handler: ({
+                    (_: UIAlertAction) -> Void in self.transition_to_victory_view()}))
+                alert.addAction(restartAction)
+                present(alert, animated: true, completion: nil)
+            }
         }
     }
     
@@ -150,7 +155,7 @@ class MultiplayerGamePageViewController: UIViewController, CBCentralManagerDeleg
     private func restart_game(board: [[String]]) {
         //for debug only
         //call game controller's restart game
-        self.game_controller.reset_game(is_multiplayer: true, debug: false, board: board)
+        self.game_controller.reset_game(is_multiplayer: true, difficulty: self.difficulty, board: board)
         //render the images for goal and game boards
         self.render_gameboard()
     }
@@ -194,11 +199,11 @@ class MultiplayerGamePageViewController: UIViewController, CBCentralManagerDeleg
     func centralManager(_ central: CBCentralManager, didDiscover devicePeripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         print(devicePeripheral.name!)
 //        if device_num == 1 {
-        if (devicePeripheral.name == DEVICE_NAME_1) {
+        if (devicePeripheral.name!.contains(DEVICE_NAME_1)) {
             self.devicePeripheral = devicePeripheral
             bluetoothManager?.connect(self.devicePeripheral!, options: nil)
 //            self.device_num = 1
-            print("Found DEVICE 1")
+            print("Found DEVICE: \(DEVICE_NAME_1)")
         }
 //        }
 //        else if device_num == 2 {
@@ -295,7 +300,6 @@ class MultiplayerGamePageViewController: UIViewController, CBCentralManagerDeleg
         self.status_indicator.isHidden = true
         self.green_tick.isHidden = false
         self.devicePeripheral?.readValue(for: self.board_colors_characteristic!)
-        self.status_label.text = "Press Start!"
         self.start_button.isHidden = false
     }
     
@@ -320,7 +324,7 @@ class MultiplayerGamePageViewController: UIViewController, CBCentralManagerDeleg
     private func transition_to_victory_view() {
         self.render_gameboard(false)
         self.reload_button.isHidden = true
-        self.status_label.text = "Press SHUFFLE on the GAMPI. Then press Play!"
+        self.status_label.text = "Remember to press SHUFFLE on the GAMPI!"
         self.status_label.isHidden = false
         self.green_tick.isHidden = false
         DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
