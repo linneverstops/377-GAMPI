@@ -10,6 +10,7 @@
 		950811E7227E45D200477A05 /* MultiplayerGamePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950811E6227E45D200477A05 /* MultiplayerGamePageViewController.swift */; };
 		950811EA227E465800477A05 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 950811E9227E465800477A05 /* CoreBluetooth.framework */; };
 		95567D8322840B3700FC8DEC /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95567D8222840B3700FC8DEC /* SettingsViewController.swift */; };
+		95567D852284242E00FC8DEC /* HelpPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95567D842284242E00FC8DEC /* HelpPageViewController.swift */; };
 		95703D2722699B63008F2A61 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95703D2622699B63008F2A61 /* AppDelegate.swift */; };
 		95703D2922699B63008F2A61 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95703D2822699B63008F2A61 /* ViewController.swift */; };
 		95703D2C22699B63008F2A61 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 95703D2A22699B63008F2A61 /* Main.storyboard */; };
@@ -26,6 +27,7 @@
 		950811E6227E45D200477A05 /* MultiplayerGamePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplayerGamePageViewController.swift; sourceTree = "<group>"; };
 		950811E9227E465800477A05 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		95567D8222840B3700FC8DEC /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		95567D842284242E00FC8DEC /* HelpPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpPageViewController.swift; sourceTree = "<group>"; };
 		95703D2322699B63008F2A61 /* GAMPI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GAMPI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		95703D2622699B63008F2A61 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		95703D2822699B63008F2A61 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 				95EE1D57226D94EA00C04B61 /* GAMPIGameController.swift */,
 				950811E6227E45D200477A05 /* MultiplayerGamePageViewController.swift */,
 				95567D8222840B3700FC8DEC /* SettingsViewController.swift */,
+				95567D842284242E00FC8DEC /* HelpPageViewController.swift */,
 			);
 			path = GAMPI;
 			sourceTree = "<group>";
@@ -170,6 +173,7 @@
 			files = (
 				95703D3E2269A1B2008F2A61 /* MainPageViewController.swift in Sources */,
 				95703D2F22699B63008F2A61 /* GAMPI.xcdatamodeld in Sources */,
+				95567D852284242E00FC8DEC /* HelpPageViewController.swift in Sources */,
 				95703D2922699B63008F2A61 /* ViewController.swift in Sources */,
 				95EE1D58226D94EA00C04B61 /* GAMPIGameController.swift in Sources */,
 				95703D3C22699EB1008F2A61 /* GradientView.swift in Sources */,

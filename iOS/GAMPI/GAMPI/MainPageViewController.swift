@@ -68,6 +68,10 @@ class MainPageViewController: UIViewController {
                 settingsvc.is_nightmode = self.is_nightmode
                 settingsvc.background_colors = self.background_colors
                 settingsvc.difficulty = self.difficulty
+            case "toHelp":
+                let helpvc = segue.destination as! HelpPageViewController
+                helpvc.is_nightmode = self.is_nightmode
+                helpvc.background_colors = self.background_colors
             default:
                 break
             }
